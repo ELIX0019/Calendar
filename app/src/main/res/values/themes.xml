@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.Calender" parent="Base.Theme.Calender" />
+    <style name="Theme.MyAppCh5" parent="Theme.MaterialComponents.DayNight.DarkActionBar.Bridge" />
 </resources>

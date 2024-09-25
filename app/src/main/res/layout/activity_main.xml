@@ -61,6 +61,13 @@
                         android:hint="请输入具体日程"
                         android:visibility="gone"/>
 
+                    <Spinner
+                        android:id="@+id/scheduleType"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:prompt="@string/schedule_type_prompt"
+                        android:visibility="gone" />
+
                     <android.widget.Button
                         android:id="@+id/checkAdd"
                         android:layout_width="wrap_content"

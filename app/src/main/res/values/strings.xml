@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Calender</string>
+    <string name="schedule_type_prompt">选择日程类型</string>
+    <string-array name="spinner_items">
+        <item>工作</item>
+        <item>学习</item>
+        <item>活动</item>
+    </string-array>
 </resources>

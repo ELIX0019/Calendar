@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
-    private static final String db_name = "MySchedule";//自定义的数据库名；
+    private static final String db_name = "MyTestSchedule1";//自定义的数据库名；
     private static final int version = 1;//版本号
 
     public MySQLiteOpenHelper(Context context) {
@@ -20,7 +20,9 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         String  sql ="create table schedules(" +
                 "id Integer primary key autoincrement," +     //id自增,只支持integer不支持int
                 "scheduleDetail varchar(50)," +
-                "time varchar(30)" +
+                "time varchar(30)," +
+                "timeInfo varchar(30)," +
+                "type varchar(30)" +
                 ")";
         db.execSQL(sql);
     }

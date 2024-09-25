@@ -2,6 +2,7 @@ package com.example.calender;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -43,6 +44,7 @@ public class EditScheduleActivity extends AppCompatActivity{
     }
 
     private void initView() {
+
         mySQLiteOpenHelper = new MySQLiteOpenHelper(this);
         myDatabase = mySQLiteOpenHelper.getWritableDatabase();
 
@@ -63,8 +65,11 @@ public class EditScheduleActivity extends AppCompatActivity{
                 deleteMySchedule();
             }
         });
+
         scheduleInput = findViewById(R.id.scheduleInput);
         scheduleInput.setText(schedule);
+
+
     }
 
     /*@Override

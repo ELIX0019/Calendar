@@ -8,9 +8,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import es.dmoral.toasty.Toasty;
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private CalendarView calendarView;
     private EditText scheduleInput;
     private Context context;
+    private Spinner spinner;
     private Button addSchedule,checkAdd;
     private String dateToday;//用于记录今天的日期
     private MySQLiteOpenHelper mySQLiteOpenHelper;
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         mySQLiteOpenHelper = new MySQLiteOpenHelper(this);
         myDatabase = mySQLiteOpenHelper.getWritableDatabase();
+        Spinner scheduleType = findViewById(R.id.scheduleType);
 
         context = this;
         addSchedule = findViewById(R.id.addSchedule);
@@ -78,6 +84,28 @@ public class MainActivity extends AppCompatActivity {
                 checkAddSchedule();
             }
         });
+
+//        下拉框初始化
+        spinner = (Spinner) findViewById(R.id.scheduleType);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.spinner_items, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Do something with the selection
+                String selected = parent.getItemAtPosition(position).toString();
+//                Toasty.info(context,selected).show();
+//                Toast.makeText(parent.getContext(), selected, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do something when nothing is selected
+            }
+        });
+
 
         calendarView = findViewById(R.id.calendar);
         scheduleInput = findViewById(R.id.scheduleDetailInput);
@@ -122,7 +150,10 @@ public class MainActivity extends AppCompatActivity {
             int scheduleCount = 0;
             do{
                 @SuppressLint("Range") String aScheduleDetail = cursor.getString(cursor.getColumnIndex("scheduleDetail"));
-                mySchedule[scheduleCount].setText("日程"+(scheduleCount+1)+"："+aScheduleDetail);
+                @SuppressLint("Range") String aScheduleTime = cursor.getString(cursor.getColumnIndex("time"));
+                @SuppressLint("Range") String aScheduleTimeInfo = cursor.getString(cursor.getColumnIndex("timeInfo"));
+                @SuppressLint("Range") String aScheduleType = cursor.getString(cursor.getColumnIndex("type"));
+                mySchedule[scheduleCount].setText("日程"+(scheduleCount+1)+"："+aScheduleDetail+" type:"+aScheduleType+" time:"+aScheduleTimeInfo);
                 mySchedule[scheduleCount].setVisibility(View.VISIBLE);
                 scheduleCount++;
                 //一定要有这句 不然TextView不够多要数组溢出了
@@ -159,9 +190,18 @@ public class MainActivity extends AppCompatActivity {
     private void checkAddSchedule() {
         // 获取用户输入的日程内容
         String scheduleDetail = scheduleInput.getText().toString().trim();
+//        获取下拉框内容  spinner.getSelectedItem().toString()
+        Spinner spinner = findViewById(R.id.scheduleType);
+        String scheduletype = spinner.getSelectedItem().toString();
+//        获取系统时间
+        // 获取当前系统时间的Calendar实例
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        String currentTime = sdf.format(calendar.getTime());
+
+
         if (scheduleDetail.isEmpty()) {
             Toasty.info(MainActivity.this,"日程不能为空").show();
-//            Toast.makeText(MainActivity.this, "日程内容不能为空！", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -169,6 +209,8 @@ public class MainActivity extends AppCompatActivity {
         // 第一个参数是表中的列名
         values.put("scheduleDetail", scheduleDetail);
         values.put("time", dateToday);
+        values.put("timeInfo", currentTime);
+        values.put("type", scheduletype);
         long result = myDatabase.insert("schedules", null, values);
 
         if (result == -1) {
@@ -176,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             scheduleInput.setVisibility(View.GONE);
             checkAdd.setVisibility(View.GONE);
+            spinner.setVisibility(View.GONE);
             queryByDate(dateToday);
             // 添加完以后把scheduleInput中的内容清除
             Toasty.success(MainActivity.this,"添加成功").show();
@@ -184,8 +227,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addMySchedule() {
+//        设置可见性
         scheduleInput.setVisibility(View.VISIBLE);
         checkAdd.setVisibility(View.VISIBLE);
+        spinner.setVisibility(View.VISIBLE);
     }
 
 }

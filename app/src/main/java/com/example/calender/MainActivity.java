@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
             dateToday = year+"-"+(month+1)+"-"+dayOfMonth;
-            Toast.makeText(context, "你选择了:"+dateToday, Toast.LENGTH_SHORT).show();
+            Toasty.info(context,"你选择了:"+dateToday, Toast.LENGTH_SHORT).show();
 
             //得把用别的日期查出来的日程删除并将其隐藏
             for(TextView v:mySchedule){
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         long result = myDatabase.insert("schedules", null, values);
 
         if (result == -1) {
-            Toast.makeText(MainActivity.this, "添加日程失败！", Toast.LENGTH_SHORT).show();
+            Toasty.warning(MainActivity.this,"添加日程失败").show();
         } else {
             scheduleInput.setVisibility(View.GONE);
             checkAdd.setVisibility(View.GONE);

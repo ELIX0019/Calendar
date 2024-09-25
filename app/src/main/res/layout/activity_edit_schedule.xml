@@ -14,10 +14,12 @@
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical">
 
-        <Button
+        <android.widget.Button
             android:id="@+id/deleteSchedule1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/btn_shape"
+            android:nextFocusDown="@+id/scheduleInput"
             android:text="删除该日程"/>
 
         <LinearLayout
@@ -33,10 +35,11 @@
                 tools:ignore="SpeakableTextPresentCheck"
                 />
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/editBtn1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/btn_shape"
                 android:text="确认修改"/>
 
         </LinearLayout>

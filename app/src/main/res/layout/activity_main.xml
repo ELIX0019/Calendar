@@ -45,7 +45,9 @@
                     android:layout_height="wrap_content"
                     android:text="添加日程"
                     android:focusable="true"
-                    android:background="@drawable/btn_focus_selector"/>
+                    android:radius="15dp"
+                    android:nextFocusDown="@+id/scheduleDetailInput"
+                    android:background="@drawable/btn_shape"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -59,11 +61,12 @@
                         android:hint="请输入具体日程"
                         android:visibility="gone"/>
 
-                    <Button
+                    <android.widget.Button
                         android:id="@+id/checkAdd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="确认添加"
+                        android:background="@drawable/btn_shape"
                         android:visibility="gone"/>
 
                 </LinearLayout>
@@ -77,7 +80,7 @@
                     android:visibility="gone"
                     android:clickable="true"
                     android:textSize="30dp"
-                    android:layout_marginLeft="20dp"/>
+                    android:background="@drawable/msg_shape"/>
 
                 <TextView
                     android:id="@+id/schedule2"
@@ -86,7 +89,7 @@
                     android:visibility="gone"
                     android:clickable="true"
                     android:textSize="30dp"
-                    android:layout_marginLeft="20dp"/>
+                    android:background="@drawable/msg_shape"/>
 
                 <TextView
                     android:id="@+id/schedule3"
@@ -95,7 +98,7 @@
                     android:visibility="gone"
                     android:clickable="true"
                     android:textSize="30dp"
-                    android:layout_marginLeft="20dp"/>
+                    android:background="@drawable/msg_shape"/>
 
                 <TextView
                     android:id="@+id/schedule4"
@@ -104,7 +107,7 @@
                     android:visibility="gone"
                     android:clickable="true"
                     android:textSize="30dp"
-                    android:layout_marginLeft="20dp"/>
+                    android:background="@drawable/msg_shape"/>
 
                 <TextView
                     android:id="@+id/schedule5"
@@ -113,7 +116,7 @@
                     android:visibility="gone"
                     android:clickable="true"
                     android:textSize="30dp"
-                    android:layout_marginLeft="20dp"/>
+                    android:background="@drawable/msg_shape"/>
 
             </LinearLayout>
 

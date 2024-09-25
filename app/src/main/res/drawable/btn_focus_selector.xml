@@ -1,4 +1,5 @@
+<!--没用-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_focused="true" android:drawable="@color/successColor"/>
-    <item android:drawable="@color/normalColor"/>
+    <item android:state_focused="true" android:drawable="@color/btn_fcs"/>
+    <item android:drawable="@color/btn_def"/>
 </selector>

@@ -15,6 +15,7 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,6 +26,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText scheduleInput;
     private Context context;
     private Spinner spinner;
+    private TimePicker timePicker;
     private Button addSchedule,checkAdd;
     private String dateToday;//用于记录今天的日期
     private MySQLiteOpenHelper mySQLiteOpenHelper;
@@ -105,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
                 // Do something when nothing is selected
             }
         });
+
+//        时间选择器初始化
+        timePicker = findViewById(R.id.timePicker);
+        timePicker.setIs24HourView(true);
 
 
         calendarView = findViewById(R.id.calendar);
@@ -193,11 +200,11 @@ public class MainActivity extends AppCompatActivity {
 //        获取下拉框内容  spinner.getSelectedItem().toString()
         Spinner spinner = findViewById(R.id.scheduleType);
         String scheduletype = spinner.getSelectedItem().toString();
-//        获取系统时间
-        // 获取当前系统时间的Calendar实例
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        String currentTime = sdf.format(calendar.getTime());
+        //获取当前系统时间的Calendar实例
+        String hour = timePicker.getCurrentHour().toString();
+        String minute = timePicker.getCurrentMinute().toString();
+        //格式化时间
+        String formattedTime = hour + ":" + minute;
 
 
         if (scheduleDetail.isEmpty()) {
@@ -209,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
         // 第一个参数是表中的列名
         values.put("scheduleDetail", scheduleDetail);
         values.put("time", dateToday);
-        values.put("timeInfo", currentTime);
+        values.put("timeInfo", formattedTime);
         values.put("type", scheduletype);
         long result = myDatabase.insert("schedules", null, values);
 
@@ -219,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
             scheduleInput.setVisibility(View.GONE);
             checkAdd.setVisibility(View.GONE);
             spinner.setVisibility(View.GONE);
+            timePicker.setVisibility(View.GONE);
             queryByDate(dateToday);
             // 添加完以后把scheduleInput中的内容清除
             Toasty.success(MainActivity.this,"添加成功").show();
@@ -227,10 +235,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addMySchedule() {
-//        设置可见性
+//      设置可见性
         scheduleInput.setVisibility(View.VISIBLE);
         checkAdd.setVisibility(View.VISIBLE);
         spinner.setVisibility(View.VISIBLE);
+        timePicker.setVisibility(View.VISIBLE);
     }
 
 }

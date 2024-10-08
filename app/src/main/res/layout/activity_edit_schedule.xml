@@ -35,6 +35,24 @@
                 tools:ignore="SpeakableTextPresentCheck"
                 />
 
+            <Spinner
+                android:id="@+id/scheduleType"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:prompt="@string/schedule_type_prompt"/>
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:layout_marginTop="-80dp"
+                android:timePickerMode="spinner"
+
+                />
+
             <android.widget.Button
                 android:id="@+id/editBtn1"
                 android:layout_width="wrap_content"
